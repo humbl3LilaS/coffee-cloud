@@ -31,7 +31,7 @@ public class DesignCoffeeController
                 new Ingredient("CSYP", "Caramel Syrups", Type.SYRUPS),
                 new Ingredient("PSYP", "Peach Syrups", Type.SYRUPS),
                 new Ingredient("COCA", "Coca cream", Type.CREAM),
-                new Ingredient("Choco", "Chocolate cream", Type.CREAM)
+                new Ingredient("CHOCO", "Chocolate cream", Type.CREAM)
         );
 
         Type[] types = Type.values();
@@ -60,6 +60,16 @@ public class DesignCoffeeController
     {
         return "design";
     }
+
+    @PostMapping
+    public String processCoffee(Coffee coffee, @ModelAttribute CoffeeOrder coffeeOrder)
+    {
+        coffeeOrder.addCoffee(coffee);
+        log.info("Processing coffee: {}", coffee);
+
+        return "redirect:/orders/current";
+    }
+
 
     private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type)
     {
