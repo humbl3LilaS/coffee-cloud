@@ -1,8 +1,11 @@
 package com.edelweiss.app.domain;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class CoffeeOrder
 {
     private String deliveryName;
