@@ -4,10 +4,13 @@ import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
 import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.Ingredient.Type;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -62,8 +65,14 @@ public class DesignCoffeeController
     }
 
     @PostMapping
-    public String processCoffee(Coffee coffee, @ModelAttribute CoffeeOrder coffeeOrder)
+    public String processCoffee(@Valid Coffee coffee, Errors errors, @ModelAttribute CoffeeOrder coffeeOrder)
     {
+
+        if (errors.hasErrors())
+        {
+            return "design";
+        }
+
         coffeeOrder.addCoffee(coffee);
         log.info("Processing coffee: {}", coffee);
 
