@@ -1,50 +1,42 @@
 package com.edelweiss.app.controller;
 
-import com.edelweiss.app.data.repository.ingredient.IngredientRepository;
+import com.edelweiss.app.data.order.IngredientRepository;
 import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
 import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.Ingredient.Type;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Slf4j
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("coffeeOrder")
 public class DesignCoffeeController
 {
-    private final IngredientRepository ingredientRepo;
 
-    @Autowired
-    public DesignCoffeeController(IngredientRepository ingredientRepo)
+    private final IngredientRepository ingredientRepository;
+
+    public DesignCoffeeController(IngredientRepository ingredientRepository)
     {
-        this.ingredientRepo = ingredientRepo;
+        this.ingredientRepository = ingredientRepository;
     }
-
 
     @ModelAttribute
     public void addIngredientToModel(Model model)
     {
-        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
-        Type[] types = Ingredient.Type.values();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
+        Type[] types = Type.values();
         for (Type type : types)
         {
-            model.addAttribute(type.toString().toLowerCase(),
-                    filterByType(ingredients, type));
+            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
     }
-
 
     @ModelAttribute(name = "coffeeOrder")
     public CoffeeOrder order()
@@ -58,7 +50,6 @@ public class DesignCoffeeController
         return new Coffee();
     }
 
-
     @GetMapping
     public String showDesignForm()
     {
@@ -68,21 +59,22 @@ public class DesignCoffeeController
     @PostMapping
     public String processCoffee(@Valid Coffee coffee, Errors errors, @ModelAttribute CoffeeOrder coffeeOrder)
     {
-
         if (errors.hasErrors())
         {
             return "design";
         }
 
         coffeeOrder.addCoffee(coffee);
-        log.info("Processing coffee: {}", coffee);
 
         return "redirect:/orders/current";
     }
+    
 
-
-    private Iterable<Ingredient> filterByType(Iterable<Ingredient> ingredients, Type type)
+    private Iterable<Ingredient> filterByType(
+            Iterable<Ingredient> ingredients, Type type)
     {
-        return StreamSupport.stream(ingredients.spliterator(), false).filter(x -> x.getType().equals(type)).toList();
+        return StreamSupport.stream(ingredients.spliterator(), false)
+                .filter(i -> i.getType().equals(type))
+                .collect(Collectors.toList());
     }
 }

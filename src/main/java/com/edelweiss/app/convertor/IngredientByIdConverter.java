@@ -1,9 +1,8 @@
 package com.edelweiss.app.convertor;
 
 
-import com.edelweiss.app.data.repository.ingredient.IngredientRepository;
+import com.edelweiss.app.data.order.IngredientRepository;
 import com.edelweiss.app.domain.Ingredient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,6 @@ public class IngredientByIdConverter implements Converter<String, Ingredient>
 {
     private IngredientRepository ingredientRepo;
 
-    @Autowired
     public IngredientByIdConverter(IngredientRepository ingredientRepo)
     {
         this.ingredientRepo = ingredientRepo;

@@ -1,4 +1,4 @@
-package com.edelweiss.app.data.repository.ingredient;
+package com.edelweiss.app.data.order;
 
 import com.edelweiss.app.domain.Ingredient;
 

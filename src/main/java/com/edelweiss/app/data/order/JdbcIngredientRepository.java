@@ -1,4 +1,4 @@
-package com.edelweiss.app.data.repository.ingredient;
+package com.edelweiss.app.data.order;
 
 import com.edelweiss.app.domain.Ingredient;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,34 +22,40 @@ public class JdbcIngredientRepository implements IngredientRepository
     @Override
     public Iterable<Ingredient> findAll()
     {
-        return jdbcTemplate.query("select id, name, type from Ingredient", this::mapRowToIngredient);
+        return jdbcTemplate.query(
+                "select id, name, type from Ingredient",
+                this::mapRowToIngredient);
     }
 
     @Override
     public Optional<Ingredient> findById(String id)
     {
-        List<Ingredient> results = jdbcTemplate.query("select id, name, type from Ingredient where id = ?", this::mapRowToIngredient, id);
-        return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+        List<Ingredient> results = jdbcTemplate.query(
+                "select id, name, type from Ingredient where id=?",
+                this::mapRowToIngredient,
+                id);
+        return results.isEmpty() ?
+                Optional.empty() :
+                Optional.of(results.get(0));
     }
 
     @Override
     public Ingredient save(Ingredient ingredient)
     {
         jdbcTemplate.update(
-                "insert into Ingredient(id, name, type) values (?, ?, ?)",
+                "insert into Ingredient (id, name, type) values (?, ?, ?)",
                 ingredient.getId(),
                 ingredient.getName(),
-                ingredient.getType()
-        );
+                ingredient.getType().toString());
         return ingredient;
     }
 
-    private Ingredient mapRowToIngredient(ResultSet row, int rowNum) throws SQLException
+    private Ingredient mapRowToIngredient(ResultSet row, int rowNum)
+            throws SQLException
     {
         return new Ingredient(
                 row.getString("id"),
                 row.getString("name"),
-                Ingredient.Type.valueOf(row.getString("type"))
-        );
+                Ingredient.Type.valueOf(row.getString("type")));
     }
 }
