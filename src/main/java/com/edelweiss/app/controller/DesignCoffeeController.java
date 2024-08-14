@@ -1,11 +1,13 @@
 package com.edelweiss.app.controller;
 
+import com.edelweiss.app.data.repository.ingredient.IngredientRepository;
 import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
 import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.Ingredient.Type;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Controller
@@ -21,26 +24,24 @@ import java.util.List;
 @SessionAttributes("coffeeOrder")
 public class DesignCoffeeController
 {
+    private final IngredientRepository ingredientRepo;
+
+    @Autowired
+    public DesignCoffeeController(IngredientRepository ingredientRepo)
+    {
+        this.ingredientRepo = ingredientRepo;
+    }
+
 
     @ModelAttribute
     public void addIngredientToModel(Model model)
     {
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("S_MILK", "Stream Milk", Type.MILK),
-                new Ingredient("LFAT_MILK", "Low Fat Milk", Type.MILK),
-                new Ingredient("LACT_FMILK", "Lactose free milk", Type.MILK),
-                new Ingredient("VSYP", "Vanilla Syrups", Type.SYRUPS),
-                new Ingredient("HSYP", "Hazelnut Syrups", Type.SYRUPS),
-                new Ingredient("CSYP", "Caramel Syrups", Type.SYRUPS),
-                new Ingredient("PSYP", "Peach Syrups", Type.SYRUPS),
-                new Ingredient("COCA", "Coca cream", Type.CREAM),
-                new Ingredient("CHOCO", "Chocolate cream", Type.CREAM)
-        );
-
-        Type[] types = Type.values();
+        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
+        Type[] types = Ingredient.Type.values();
         for (Type type : types)
         {
-            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+            model.addAttribute(type.toString().toLowerCase(),
+                    filterByType(ingredients, type));
         }
     }
 
@@ -80,8 +81,8 @@ public class DesignCoffeeController
     }
 
 
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type)
+    private Iterable<Ingredient> filterByType(Iterable<Ingredient> ingredients, Type type)
     {
-        return ingredients.stream().filter(x -> x.getType().equals(type)).toList();
+        return StreamSupport.stream(ingredients.spliterator(), false).filter(x -> x.getType().equals(type)).toList();
     }
 }
