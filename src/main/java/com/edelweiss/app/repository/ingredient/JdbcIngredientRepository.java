@@ -1,4 +1,4 @@
-package com.edelweiss.app.data.order;
+package com.edelweiss.app.repository.ingredient;
 
 import com.edelweiss.app.domain.Ingredient;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -20,7 +20,7 @@ create table if not exists Coffee (
     );
 
 create table if not exists Ingredient_Ref (
-                                              ingredient varchar(4) not null,
+                                              ingredient varchar(10) not null,
     coffee bigint not null,
     coffee_key bigint not null
     );

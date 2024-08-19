@@ -1,6 +1,6 @@
 package com.edelweiss.app.controller;
 
-import com.edelweiss.app.data.order.IngredientRepository;
+import com.edelweiss.app.repository.ingredient.IngredientRepository;
 import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
 import com.edelweiss.app.domain.Ingredient;

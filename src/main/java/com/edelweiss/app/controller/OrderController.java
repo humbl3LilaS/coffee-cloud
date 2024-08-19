@@ -1,6 +1,7 @@
 package com.edelweiss.app.controller;
 
 import com.edelweiss.app.domain.CoffeeOrder;
+import com.edelweiss.app.repository.order.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,13 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("coffeeOrder")
 public class OrderController
 {
+    private OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository)
+    {
+        this.orderRepository = orderRepository;
+    }
+
 
     @GetMapping("/current")
     public String current()
@@ -32,7 +40,7 @@ public class OrderController
             return "orderForm";
         }
 
-        log.info("Order submitted {}", coffeeOrder);
+        orderRepository.save(coffeeOrder);
         sessionStatus.setComplete();
 
         return "redirect:/";
