@@ -1,3 +1,7 @@
+-- noinspection SqlDialectInspectionForFile
+
+-- noinspection SqlNoDataSourceInspectionForFile
+
 create table if not exists Coffee_Order (
                                           id identity,
                                           delivery_Name varchar(50) not null,
