@@ -73,6 +73,7 @@ public class DesignCoffeeController
     private Iterable<Ingredient> filterByType(
             Iterable<Ingredient> ingredients, Type type)
     {
+
         return StreamSupport.stream(ingredients.spliterator(), false)
                 .filter(i -> i.getType().equals(type))
                 .collect(Collectors.toList());
