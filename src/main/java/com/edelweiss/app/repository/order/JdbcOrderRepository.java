@@ -2,7 +2,6 @@ package com.edelweiss.app.repository.order;
 
 import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
-import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.IngredientRef;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.asm.Type;
