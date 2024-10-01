@@ -1,7 +1,8 @@
 package com.edelweiss.app.controller;
 
 import com.edelweiss.app.domain.CoffeeOrder;
-import com.edelweiss.app.repository.order.OrderRepository;
+import com.edelweiss.repository.OrderRepository;
+
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

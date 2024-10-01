@@ -1,8 +1,10 @@
 package com.edelweiss.app.convertor;
 
 
-import com.edelweiss.app.repository.ingredient.IngredientRepository;
+
 import com.edelweiss.app.domain.Ingredient;
+import com.edelweiss.repository.IngredientRepository;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

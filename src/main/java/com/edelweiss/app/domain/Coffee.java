@@ -7,9 +7,14 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
 @Data
+@Table
 public class Coffee
 {
+    @Id
     private Long id;
 
     private Date createdAt = new Date();

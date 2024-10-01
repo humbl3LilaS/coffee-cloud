@@ -1,10 +1,12 @@
 package com.edelweiss.app.controller;
 
-import com.edelweiss.app.repository.ingredient.IngredientRepository;
+
 import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
 import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.Ingredient.Type;
+import com.edelweiss.repository.IngredientRepository;
+
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
