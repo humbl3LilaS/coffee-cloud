@@ -3,6 +3,7 @@ package com.edelweiss.app.domain;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Table
+@EqualsAndHashCode(exclude = "createdAt")
 public class Coffee
 {
     @Id

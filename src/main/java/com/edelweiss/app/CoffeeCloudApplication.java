@@ -1,13 +1,15 @@
 package com.edelweiss.app;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.Ingredient.Type;
-import com.edelweiss.repository.IngredientRepository;
+import com.edelweiss.app.repository.IngredientRepository;
 
 @SpringBootApplication
 public class CoffeeCloudApplication
@@ -19,9 +21,10 @@ public class CoffeeCloudApplication
     }
 
     @Bean
-    public CommandLineRunner dataLoder(IngredientRepository repo) {
-        return arg -> {
-            repo.deleteAll();;
+    @Transactional
+    ApplicationRunner dataLoder(IngredientRepository repo) {
+        return args -> {
+            repo.deleteAll();
             repo.save(new Ingredient("WMILK", "Whole Milk", Type.MILK));
             repo.save(new Ingredient("LFMILK", "Low-fat Milk", Type.MILK));
             repo.save(new Ingredient("LTFMILK", "Lactose-free Milk", Type.MILK));

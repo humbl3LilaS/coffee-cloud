@@ -5,7 +5,7 @@ import com.edelweiss.app.domain.Coffee;
 import com.edelweiss.app.domain.CoffeeOrder;
 import com.edelweiss.app.domain.Ingredient;
 import com.edelweiss.app.domain.Ingredient.Type;
-import com.edelweiss.repository.IngredientRepository;
+import com.edelweiss.app.repository.IngredientRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

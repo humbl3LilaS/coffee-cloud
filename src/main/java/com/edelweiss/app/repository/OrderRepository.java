@@ -1,4 +1,4 @@
-package com.edelweiss.repository;
+package com.edelweiss.app.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

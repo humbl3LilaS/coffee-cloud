@@ -13,8 +13,8 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table
 @Data
+@Table
 public class CoffeeOrder implements Serializable
 {
     private static final long serialVersionUID = 1L;
